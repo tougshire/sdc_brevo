@@ -1,0 +1,96 @@
+{% extends './_base.html' %}
+{% load static %}
+{% block content %}
+
+<h2>In Database but Not Brevo</h2>
+
+    <div class="list">
+      <div class="row rowhead">
+        {% include 'touglates/list_head.html' with field='' %}
+        {% if 'primary_email' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field="email" %}
+        {% endif %}
+        {% if 'name' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field="Name" %}
+        {% endif %}
+        {% if 'membershipclass' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field="membership class" %}
+        {% endif %}
+        {% if 'phones' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field="Phones(voice,txt)" %}
+        {% endif %}
+
+      </div>
+
+      {% for person in non_contacts %}
+        <div class="row">
+          <div class="list-field field column">
+            <div><a href="{% url 'sdc_people:person-detail' person.pk %}">view person</a></div>
+          </div>
+          {% if 'primary_email' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=person.primary_email %}
+          {% endif %}
+          {% if 'name' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=person.name_formal|add:"("|add:person.name_friendly|add:")" %}
+          {% endif %}
+          {% if 'membershipclass' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=person.membershipclass %}
+          {% endif %}
+          {% if 'phones' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field="<div>"|add:person.primary_voice|add:"</div><div>"|add:person.primary_text|add:"</div>"|safe %}
+          {% endif %}
+
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
+  <h2>In Database but with Mismatched Membership Class</h2>
+
+    <div class="list">
+      <div class="row rowhead">
+        {% include 'touglates/list_head.html' with field='' %}
+        {% if 'primary_email' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field="email" %}
+        {% endif %}
+        {% if 'name' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field="Name" %}
+        {% endif %}
+        {% if 'membershipclass' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field="membership class / [brevo membership class]" %}
+        {% endif %}
+        {% if 'phones' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field="Phones(voice,txt)" %}
+        {% endif %}
+
+      </div>
+
+      {% for person in dif_contacts %}
+        <div class="row">
+          <div class="list-field field column">
+            <div><a href="{% url 'sdc_people:person-detail' person.pk %}">view person</a></div>
+            <div><a href="https://app.brevo.com/contact/index/{{ person.to_brevo.id }}">view contact</a></div>
+          </div>
+          {% if 'primary_email' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=person.primary_email %}
+          {% endif %}
+          {% if 'name' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=person.name_formal|add:"("|add:person.name_friendly|add:")" %}
+          {% endif %}
+          {% if 'membershipclass' in show_columns or not show_columns %}
+            {% include 'touglates/list_fields.html' with field_1=person.membershipclass field_2=person.to_brevo.membership_class before_fields='<div>'|safe between_fields='</div><div>'|safe after_fields='</div>'|safe %}
+
+          {% endif %}
+          {% if 'phones' in show_columns or not show_columns %}
+            {% include 'touglates/list_fields.html' with field_1=person.primary_voice field_2=person.primary_text before_fields='<div>'|safe between_fields='</div><div>'|safe after_fields='</div>'|safe %}
+          {% endif %}
+
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
+
+  {% endblock %}

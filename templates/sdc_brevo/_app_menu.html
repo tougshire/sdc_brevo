@@ -1,0 +1,49 @@
+<div class="menu app-menu">
+
+  {% if perms.sdc_people.view_person %}
+    {% if 'person-' in request.resolver_match.url_name %}
+      <div class="menu menu-here">
+        <a href="{% url 'sdc_people:person-list' %}">People</a>
+      </div>
+    {% else %}
+      <div class="menu">
+        <a href="{% url 'sdc_people:person-list' %}">People</a>
+      </div>
+    {% endif %}
+  {% endif %}
+  {% if perms.sdc_people.view_meeting %}
+    {% if 'meeting-' in request.resolver_match.url_name %}
+      <div class="menu menu-here">
+        <a href="{% url 'sdc_people:meeting-list' %}">Meetings</a>
+      </div>
+    {% else %}
+      <div class="menu">
+        <a href="{% url 'sdc_people:meeting-list' %}">Meetings</a>
+      </div>
+    {% endif %}
+  {% endif %}
+
+  {% if perms.sdc_people.view_subcommittee %}
+    {% if 'subcommittee-' in request.resolver_match.url_name %}
+      <div class="menu menu-here">
+        <a href="{% url 'sdc_people:subcommittee-list' %}">Committees</a>
+      </div>
+    {% else %}
+      <div class="menu">
+        <a href="{% url 'sdc_people:subcommittee-list' %}">Committees</a>
+      </div>
+    {% endif %}
+  {% endif %}
+
+  {% if user.is_authenticated %}
+    <div class="menu menu-cluster">
+      {% comment %}<a href="{% url 'profile' %}">{{ user }}</a> {% endcomment %}
+      <form class="menu-item" method="POST" action="{% url 'logout' %}">{% csrf_token %}<button class="menu-item" type="submit" style="background:none; border:none; padding:0;">Log Out</button></form>
+    </div>
+  {% else %}
+    <div class="menu">
+      <a href="{% url 'login' %}?next={{ request.path }}">Log in</a>
+    </div>
+  {% endif %}
+
+</div>
