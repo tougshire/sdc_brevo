@@ -1,0 +1,89 @@
+
+.list {
+    width:100%;
+    display:table;
+}
+
+.list .row, .list .rowhead {
+    display:table-row
+}
+.list .rowhead {
+    background-color:#eeeeff;
+}
+
+.list .list-field {
+    display:table-cell;
+    border: 1px solid lightblue;
+    padding-left: .2em;
+    padding-right: .2em;
+}
+.list .rowhead .field {
+    border:1px solid blue;
+}
+.list .field::after {
+    content: "\00a0"
+}
+
+
+.control .label {
+    flex-grow:0;
+    width:15%;
+}
+
+.detail .detailset {
+    margin-left:2em;
+}
+.detail .field-outer-wrapper {
+    display:flex;
+    width:100%;
+}
+
+.detail .detail-field-inner-wrapper {
+    display:flex;
+    width:100%;
+    margin-top:.5em;
+}
+
+.detail .control {
+    display:flex;
+}
+
+.detail .detail-field-label {
+    width:15%;
+}
+
+.detail .help_text {
+    margin-left:15%;
+}
+
+
+.form .formsetform {
+    margin-left:2em;
+}
+
+.form .form-field-outer-wrapper {
+    margin-top:.5em;
+}
+
+.form .form-field-inner-wrapper {
+    display:flex;
+    flex-wrap:wrap;
+    width:100%;
+    margin-top:.5em;
+}
+
+.form .form-field-label {
+    width:15%;
+}
+
+
+.form .form-field-control {
+    width:80%;
+    display:flex;
+}
+
+
+.form .form-field-help-text {
+    width:80%;
+    margin-left:15%;
+}

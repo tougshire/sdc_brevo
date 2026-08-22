@@ -12,5 +12,10 @@ urlpatterns = [
         views.PersonList.as_view(),
         name="person-list",
     ),
+    path(
+        "email/list/",
+        views.email_list,
+        name="email-list",
+    ),
 
 ]

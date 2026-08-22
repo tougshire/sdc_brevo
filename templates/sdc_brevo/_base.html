@@ -4,35 +4,35 @@
 <!DOCTYPE html>
 <html lang='en'>
 <head>
-<title>SDC People</title>
+<title>SDC Brevo</title>
 <script src="{% static 'touglates/touglates.js' %}"></script>
 {% block head_stylesheet %}
-{{ block.super }}
-<link rel="stylesheet" href="{% static 'sdc_people/sdc_people.css' %}">
-{% project_include_file 'main_css' as cssfile %}
-{% if cssfile %}<link rel="stylesheet" href="{% static cssfile %}">{% endif %}
+	{{ block.super }}
+	<link rel="stylesheet" href="{% static 'sdc_brevo/sdc_brevo.css' %}">
+	{% project_include_file 'main_css' as cssfile %}
+	{% if cssfile %}<link rel="stylesheet" href="{% static cssfile %}">{% endif %}
 {% endblock %}
 </head>
 {% block body %}
-<body>
-{% if messages %}
-  <ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-  </ul>
-{% endif %}
-{% block menu %}
-{% project_include_file 'main_menu' as includefile %}
-{% if includefile %}
-  {% include includefile %}
-{% endif %}
-{% include './_app_menu.html' %}
-{% endblock %}
-{% block content %}
-{% endblock %}
-{% block bottomscript %}
-{% endblock %}
-</body>
+	<body>
+	{% if messages %}
+	  <ul class="messages">
+	    {% for message in messages %}
+	    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+	    {% endfor %}
+	  </ul>
+	{% endif %}
+	{% block menu %}
+		{% project_include_file 'main_menu' as includefile %}
+		{% if includefile %}
+		  {% include includefile %}
+		{% endif %}
+		{% include './_app_menu.html' %}
+	{% endblock %}
+	{% block content %}
+	{% endblock %}
+	{% block bottomscript %}
+	{% endblock %}
+	</body>
 {% endblock %}
 </html>

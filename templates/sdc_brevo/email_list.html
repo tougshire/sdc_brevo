@@ -1,0 +1,178 @@
+{% extends './_base.html' %}
+{% load static %}
+{% block content %}
+
+	<div class="list">
+	<h2>Not in Brevo</h2>
+	<table>
+		<tr><th>Email</th><th>Person</th><th>Membership Class</th></tr>
+    		{% for email, value in emails_not_in_brevo.items   %}
+		<tr>
+			<td>
+				{{ email }}
+			</td>
+			<td>
+				<ul>
+					{% for person in value.people %}
+						<li>
+							<a href="{% url 'sdc_people:person-detail' person.pk %}">{{ person }}</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</td>
+			<td>
+				<ul>
+					{% for membership_class_each in value.membership_class %}
+						<li>
+							{{ membership_class_each }}
+						</li>
+					{% endfor %}
+				</ul>
+			</td>
+		{% endfor %}
+	</div>
+	<h2>Membership Class Mismatch</h2>
+	<table>
+		<tr><th>Email</th><th>SDC Person</th><th>SDC Membership Class</th><th>Brevo Person</th><th>Brevo Membership Class</th></tr>
+    		{% for email, value in emails_brevo_mismatch.items  %}
+			<tr>
+				<td>
+					{{ email }}
+				</td>
+				<td>
+					<ul>
+						{% for person in value.people %}
+							<li>
+								<a href="{% url 'sdc_people:person-detail' person.pk  %}">{{ person }}</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</td>
+				<td>
+					<ul>
+						{% for membership_class_each in value.membership_class %}
+							<li>
+								{{ membership_class_each }}
+							</li>
+						{% endfor %}
+					</ul>
+				</td>
+				<td>
+            					<a href="https://app.brevo.com/contact/index/{{ value.brevo_contact.id }}">
+							{{ value.brevo_contact.attributes.FIRSTNAME }}
+							{{ value.brevo_contact.attributes.LASTNAME }}
+						</a>
+				</td>
+				<td>
+					<ul>
+						{% for membership_class in value.brevo_membership_class %}
+							<li>
+								{{ membership_class }}
+							</li>
+						{% endfor %}
+					</ul>
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+	<h2>Membership Class Match</h2>
+	<table>
+		<tr><th>Email</th><th>SDC Person</th><th>Membership Class</th><th>Brevo Person</th><th>Brevo Membership Class</th></tr>
+    		{% for email, value in emails_brevo_match.items  %}
+			<tr>
+				<td>
+					{{ email }}
+				</td>
+				<td>
+					<ul>
+						{% for person in value.people %}
+							<li>
+								<a href="{% url 'sdc_people:person-detail' person.pk  %}">{{ person }}</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</td>
+				<td>
+					<ul>
+						{% for membership_class in value.membership_class %}
+							<li>
+								{{ membership_class }}
+							</li>
+						{% endfor %}
+					</ul>
+				</td>
+				<td>
+            					<a href="https://app.brevo.com/contact/index/{{ value.brevo_contact.id }}">
+							{{ value.brevo_contact.attributes.FIRSTNAME }}
+							{{ value.brevo_contact.attributes.LASTNAME }}
+						</a>
+				</td>
+				<td>
+					<ul>
+						{% for membership_class in value.brevo_membership_class %}
+							<li>
+								{{ membership_class }}
+							</li>
+						{% endfor %}
+					</ul>
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+	<h2>In DB with no email</h2>
+	<table>
+    		{% for person in people_no_email  %}
+			<tr>
+				<td>
+					&nbsp;
+				</td>
+				<td>
+								{{ person }}
+				</td>
+				<td>
+								{{ person.membership_class }}
+				</td>
+				<td>
+					&nbsp;
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+	<h2>In Brevo - Not in our list</h2>
+	<table>
+    		{% for email, value in brevo_not_in_db.items  %}
+			<tr>
+				<td>
+					{{ email }}
+				</td>
+				<td>
+					<ul>
+						{% for person in value.people %}
+							<li>
+								{{ person }}
+							</li>
+						{% endfor %}
+					</ul>
+				</td>
+				<td>
+					<ul>
+						{% for membership_class in value.membership_class %}
+							<li>
+								{{ membership_class }}
+							</li>
+						{% endfor %}
+					</ul>
+				</td>
+				<td>
+					<ul>
+						{% for membership_class in value.brevo_membership_class %}
+							<li>
+								{{ membership_class }}
+							</li>
+						{% endfor %}
+					</ul>
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+{% endblock %}

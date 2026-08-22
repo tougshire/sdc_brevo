@@ -42,7 +42,7 @@
     </div>
   {% else %}
     <div class="menu">
-      <a href="{% url 'login' %}?next={{ request.path }}">Log in</a>
+	    {% comment %}<a href="{% url 'login' %}?next={{ request.path }}">Log in</a>{% endcomment %}
     </div>
   {% endif %}
 
