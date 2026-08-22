@@ -22,9 +22,9 @@
 			</td>
 			<td>
 				<ul>
-					{% for membership_class_each in value.membership_class %}
+					{% for membershipclass_each in value.membershipclass %}
 						<li>
-							{{ membership_class_each }}
+							{{ membershipclass_each }}
 						</li>
 					{% endfor %}
 				</ul>
@@ -35,7 +35,7 @@
 	<h2>Membership Class Mismatch</h2>
 	<table>
 		<tr><th>Email</th><th>SDC Person</th><th>SDC Membership Class</th><th>Brevo Person</th><th>Brevo Membership Class</th></tr>
-    		{% for email, value in emails_brevo_mismatch.items  %}
+    		{% for email, value in brevo_membershipclass_mismatch.items  %}
 			<tr>
 				<td>
 					{{ email }}
@@ -51,9 +51,9 @@
 				</td>
 				<td>
 					<ul>
-						{% for membership_class_each in value.membership_class %}
+						{% for membershipclass_each in value.membershipclass %}
 							<li>
-								{{ membership_class_each }}
+								{{ membershipclass_each }}
 							</li>
 						{% endfor %}
 					</ul>
@@ -66,9 +66,9 @@
 				</td>
 				<td>
 					<ul>
-						{% for membership_class in value.brevo_membership_class %}
+						{% for membershipclass in value.brevo_membershipclass %}
 							<li>
-								{{ membership_class }}
+								{{ membershipclass }}
 							</li>
 						{% endfor %}
 					</ul>
@@ -79,7 +79,7 @@
 	<h2>Membership Class Match</h2>
 	<table>
 		<tr><th>Email</th><th>SDC Person</th><th>Membership Class</th><th>Brevo Person</th><th>Brevo Membership Class</th></tr>
-    		{% for email, value in emails_brevo_match.items  %}
+    		{% for email, value in brevo_match.items  %}
 			<tr>
 				<td>
 					{{ email }}
@@ -95,9 +95,9 @@
 				</td>
 				<td>
 					<ul>
-						{% for membership_class in value.membership_class %}
+						{% for membershipclass in value.membershipclass %}
 							<li>
-								{{ membership_class }}
+								{{ membershipclass }}
 							</li>
 						{% endfor %}
 					</ul>
@@ -110,9 +110,9 @@
 				</td>
 				<td>
 					<ul>
-						{% for membership_class in value.brevo_membership_class %}
+						{% for membershipclass in value.brevo_membershipclass %}
 							<li>
-								{{ membership_class }}
+								{{ membershipclass }}
 							</li>
 						{% endfor %}
 					</ul>
@@ -131,7 +131,7 @@
 								{{ person }}
 				</td>
 				<td>
-								{{ person.membership_class }}
+								{{ person.membershipclass }}
 				</td>
 				<td>
 					&nbsp;
@@ -157,18 +157,18 @@
 				</td>
 				<td>
 					<ul>
-						{% for membership_class in value.membership_class %}
+						{% for membershipclass in value.membershipclass %}
 							<li>
-								{{ membership_class }}
+								{{ membershipclass }}
 							</li>
 						{% endfor %}
 					</ul>
 				</td>
 				<td>
 					<ul>
-						{% for membership_class in value.brevo_membership_class %}
+						{% for membershipclass in value.brevo_membershipclass %}
 							<li>
-								{{ membership_class }}
+								{{ membershipclass }}
 							</li>
 						{% endfor %}
 					</ul>

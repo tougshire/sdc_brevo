@@ -14,8 +14,9 @@ def email_list(request):
     people_no_email = []
     all_emails = {}
     emails_not_in_brevo = {}
-    emails_brevo_match = {}
-    emails_brevo_mismatch = {}
+    brevo_match = {}
+    brevo_membershipclass_mismatch = {}
+    brevo_name_mismatch = {}
     brevo_not_in_db = {}
 
     people = Person.objects.all().order_by('primary_email')
@@ -33,10 +34,12 @@ def email_list(request):
             people_no_email.append(person)
         else:
             if primary_email not in all_emails:
-                all_emails[primary_email] = {'people': [ person ], 'membership_class': [ person.membershipclass.name ] }
+                all_emails[primary_email] = {'people': [ person ], 'membershipclass': [ person.membershipclass.name ], 'membershipclass_check': [ person.membershipclass.name ] }
             else:
                 all_emails[primary_email]['people'].append( person )
-                all_emails[primary_email]['membership_class'].append( person.membershipclass.name )
+                all_emails[primary_email]['membershipclass'].append( person.membershipclass.name )
+                if person.membershipclass.name not in all_emails[primary_email]['membershipclass_check']:
+                    all_emails[primary_email]['membershipclass_check'].append( person.membershipclass.name )
 
 
     for contact_json in contacts_json:
@@ -44,11 +47,11 @@ def email_list(request):
             key_email = contact_json["email"].lower()
             if key_email in all_emails:
                 all_emails[ key_email ]['brevo_contact']=contact_json
-                all_emails[ key_email ]['brevo_membership_class'] = contact_json['attributes']['MEMBERSHIP_CLASS']
-                if all_emails[ key_email ]['membership_class'] == contact_json['attributes']['MEMBERSHIP_CLASS']:
-                    emails_brevo_match[ key_email ] = all_emails[ key_email ]
+                all_emails[ key_email ]['brevo_membershipclass'] = contact_json['attributes']['MEMBERSHIP_CLASS']
+                if all_emails[ key_email ]['membershipclass_check'] == contact_json['attributes']['MEMBERSHIP_CLASS']:
+                    brevo_match[ key_email ] = all_emails[ key_email ]
                 else:
-                    emails_brevo_mismatch[ key_email ] = all_emails[ key_email ]
+                    brevo_membershipclass_mismatch[ key_email ] = all_emails[ key_email ]
             else:
                 brevo_not_in_db[ key_email ] = contact_json
 
@@ -63,8 +66,9 @@ def email_list(request):
     content = {
         'all_emails': all_emails,
         'emails_not_in_brevo': emails_not_in_brevo,
-        'emails_brevo_mismatch': emails_brevo_mismatch,
-        'emails_brevo_match': emails_brevo_match,
+        'brevo_membershipclass_mismatch': brevo_membershipclass_mismatch,
+        'brevo_name_mismatch': brevo_name_mismatch,
+        'brevo_match': brevo_match,
         'brevo_not_in_db': brevo_not_in_db,
         'people_no_email': people_no_email,
     }
