@@ -8,7 +8,9 @@ from sdc_people.models import Person
 from django.views.generic.list import ListView
 from django.shortcuts import render
 from datetime import date
+from django.contrib.auth.decorators import permission_required
 
+@permission_required('sdc_people.view_peson')
 def email_list(request):
 
     people_no_email = []
