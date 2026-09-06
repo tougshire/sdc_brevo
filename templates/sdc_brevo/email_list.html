@@ -3,36 +3,41 @@
 {% block content %}
 
 	<div class="list">
-	<h2>Not in Brevo</h2>
-	<table>
-		<tr><th>Email</th><th>Person</th><th>Membership Class</th></tr>
-    		{% for email, value in emails_not_in_brevo.items   %}
-		<tr>
-			<td>
-				{{ email }}
-			</td>
-			<td>
-				<ul>
-					{% for person in value.people %}
-						<li>
-							<a href="{% url 'sdc_people:person-detail' person.pk %}">{{ person }}</a>
-						</li>
-					{% endfor %}
-				</ul>
-			</td>
-			<td>
-				<ul>
-					{% for membershipclass_each in value.membershipclass %}
-						<li>
-							{{ membershipclass_each }}
-						</li>
-					{% endfor %}
-				</ul>
-			</td>
-		</tr>
-		{% endfor %}
-	</table>
+	<h2>In Database but Not in Brevo</h2>
+	<div id="show_dbxbrevo" class="togglevis action" data-target_id="dbxbrevo" data-target_display="block">show</div>
+	<div id="dbxbrevo" style="display:none">
+		<table>
+			<tr><th>Email</th><th>Person</th><th>Membership Class</th></tr>
+			{% for email, value in emails_not_in_brevo.items   %}
+			<tr>
+				<td>
+					{{ email }}
+				</td>
+				<td>
+					<ul>
+						{% for person in value.people %}
+							<li>
+								<a href="{% url 'sdc_people:person-detail' person.pk %}">{{ person }}</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</td>
+				<td>
+					<ul>
+						{% for membershipclass_each in value.membershipclass %}
+							<li>
+								{{ membershipclass_each }}
+							</li>
+						{% endfor %}
+					</ul>
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
 	<h2>Membership Class Mismatch</h2>
+	<div id="show_classmiss" class="togglevis action" data-target_id="classmiss" data-target_display="block">show</div>
+	<div id="classmiss" style="display:none">
 	<table>
 		<tr><th>Email</th><th>SDC Person</th><th>SDC Membership Class</th><th>Brevo Person</th><th>Brevo Membership Class</th></tr>
     		{% for email, value in brevo_membershipclass_mismatch.items  %}
@@ -76,7 +81,72 @@
 			</tr>
 		{% endfor %}
 	</table>
+	</div>
+	<h2>In DB with no email</h2>
+	<div id="show_noemail" class="togglevis action" data-target_id="noemail" data-target_display="block">show</div>
+	<div id="noemail" style="display:none">
+	<table>
+    		{% for person in people_no_email  %}
+			<tr>
+				<td>
+					&nbsp;
+				</td>
+				<td>
+								{{ person }}
+				</td>
+				<td>
+								{{ person.membershipclass }}
+				</td>
+				<td>
+					&nbsp;
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+	</div>
+	<h2>In Brevo - Not in our list</h2>
+	<div id="show_brevoxdb" class="togglevis action" data-target_id="brevoxdb" data-target_display="block">show</div>
+	<div id="brevoxdb" style="display:none">
+	<table>
+    		{% for email, value in brevo_not_in_db.items  %}
+			<tr>
+				<td>
+					{{ email }}
+				</td>
+				<td>
+					<ul>
+						{% for person in value.people %}
+							<li>
+								{{ person }}
+							</li>
+						{% endfor %}
+					</ul>
+				</td>
+				<td>
+					<ul>
+						{% for membershipclass in value.membershipclass %}
+							<li>
+								{{ membershipclass }}
+							</li>
+						{% endfor %}
+					</ul>
+				</td>
+				<td>
+					<ul>
+						{% for membershipclass in value.brevo_membershipclass %}
+							<li>
+								{{ membershipclass }}
+							</li>
+						{% endfor %}
+					</ul>
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+	</div>
 	<h2>Membership Class Match</h2>
+	<div id="show_classmatch" class="togglevis action" data-target_id="classmatch" data-target_display="block">show</div>
+	<div id="classmatch" style="display:none">
 	<table>
 		<tr><th>Email</th><th>SDC Person</th><th>Membership Class</th><th>Brevo Person</th><th>Brevo Membership Class</th></tr>
     		{% for email, value in brevo_match.items  %}
@@ -120,61 +190,30 @@
 			</tr>
 		{% endfor %}
 	</table>
-	<h2>In DB with no email</h2>
-	<table>
-    		{% for person in people_no_email  %}
-			<tr>
-				<td>
-					&nbsp;
-				</td>
-				<td>
-								{{ person }}
-				</td>
-				<td>
-								{{ person.membershipclass }}
-				</td>
-				<td>
-					&nbsp;
-				</td>
-			</tr>
-		{% endfor %}
-	</table>
-	<h2>In Brevo - Not in our list</h2>
-	<table>
-    		{% for email, value in brevo_not_in_db.items  %}
-			<tr>
-				<td>
-					{{ email }}
-				</td>
-				<td>
-					<ul>
-						{% for person in value.people %}
-							<li>
-								{{ person }}
-							</li>
-						{% endfor %}
-					</ul>
-				</td>
-				<td>
-					<ul>
-						{% for membershipclass in value.membershipclass %}
-							<li>
-								{{ membershipclass }}
-							</li>
-						{% endfor %}
-					</ul>
-				</td>
-				<td>
-					<ul>
-						{% for membershipclass in value.brevo_membershipclass %}
-							<li>
-								{{ membershipclass }}
-							</li>
-						{% endfor %}
-					</ul>
-				</td>
-			</tr>
-		{% endfor %}
-	</table>
 	</div>
+
+<script>
+	function toggleVis(e) {
+		let elCaller=e.target
+		let elTarget = document.getElementById(elCaller.dataset.target_id)
+		if (elTarget) {
+			if(elTarget.style.display == "none") {
+				elTarget.style.display=elCaller.dataset.target_display
+				elCaller.innerText="hide"
+			} else {
+				elTarget.style.display="none"
+				elCaller.innerText="show"
+			}
+		} 
+		
+	}
+	let visButtons = document.getElementsByClassName("togglevis")
+	for (visButton of visButtons) {
+		visButton.addEventListener("click", function(e) {
+			e.preventDefault()
+			toggleVis(e)
+		})
+	}
+</script>
+
 {% endblock %}

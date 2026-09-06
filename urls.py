@@ -8,9 +8,8 @@ app_name = "sdc_brevo"
 urlpatterns = [
 
     path(
-        "person/list/",
-        views.PersonList.as_view(),
-        name="person-list",
+        "",
+        RedirectView.as_view(url=reverse_lazy("sdc_brevo:email-list")),
     ),
     path(
         "email/list/",
