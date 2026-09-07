@@ -8,8 +8,8 @@
 <script src="{% static 'touglates/touglates.js' %}"></script>
 {% block head_stylesheet %}
 	{{ block.super }}
-	<link rel="stylesheet" href="{% static 'sdcvirginiadata/sdcvirginiadata.css' %}">
 	<link rel="stylesheet" href="{% static 'sdc_brevo/sdc_brevo.css' %}">
+	<!-- css file {% project_include_file 'main_css' %} -->
 	{% project_include_file 'main_css' as cssfile %}
 	{% if cssfile %}<link rel="stylesheet" href="{% static cssfile %}">{% endif %}
 {% endblock %}
