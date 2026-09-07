@@ -3,34 +3,11 @@
   {% if perms.sdc_people.view_person %}
     {% if 'person-' in request.resolver_match.url_name %}
       <div class="menu menu-here">
-        <a href="{% url 'sdc_people:person-list' %}">People</a>
+        <a href="{% url 'sdc_brevo:email-list' %}">Emails</a>
       </div>
     {% else %}
       <div class="menu">
-        <a href="{% url 'sdc_people:person-list' %}">People</a>
-      </div>
-    {% endif %}
-  {% endif %}
-  {% if perms.sdc_people.view_meeting %}
-    {% if 'meeting-' in request.resolver_match.url_name %}
-      <div class="menu menu-here">
-        <a href="{% url 'sdc_people:meeting-list' %}">Meetings</a>
-      </div>
-    {% else %}
-      <div class="menu">
-        <a href="{% url 'sdc_people:meeting-list' %}">Meetings</a>
-      </div>
-    {% endif %}
-  {% endif %}
-
-  {% if perms.sdc_people.view_subcommittee %}
-    {% if 'subcommittee-' in request.resolver_match.url_name %}
-      <div class="menu menu-here">
-        <a href="{% url 'sdc_people:subcommittee-list' %}">Committees</a>
-      </div>
-    {% else %}
-      <div class="menu">
-        <a href="{% url 'sdc_people:subcommittee-list' %}">Committees</a>
+        <a href="{% url 'sdc_brevo:email-list' %}">Emails</a>
       </div>
     {% endif %}
   {% endif %}

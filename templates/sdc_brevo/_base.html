@@ -9,9 +9,7 @@
 {% block head_stylesheet %}
 	{{ block.super }}
 	<link rel="stylesheet" href="{% static 'sdc_brevo/sdc_brevo.css' %}">
-	<!-- css file {% project_include_file 'main_css' %} -->
-	{% project_include_file 'main_css' as cssfile %}
-	{% if cssfile %}<link rel="stylesheet" href="{% static cssfile %}">{% endif %}
+	{% if base_context_settings.main_css %}<link rel="stylesheet" href="{% static base_context_settings.main_css  %}">{% endif %}
 {% endblock %}
 </head>
 {% block body %}
@@ -24,11 +22,10 @@
 	  </ul>
 	{% endif %}
 	{% block menu %}
-		{% project_include_file 'main_menu' as includefile %}
-		{% if includefile %}
-		  {% include includefile %}
+	{% if base_context_settings.main_menu %}
+		{% include base_context_settings.main_menu %}
 		{% endif %}
-		{% include './_app_menu.html' %}
+	{% include './_app_menu.html' %}
 	{% endblock %}
 	{% block content %}
 	{% endblock %}

@@ -144,9 +144,9 @@
 		{% endfor %}
 	</table>
 	</div>
-	<h2>Membership Class Match</h2>
-	<div id="show_classmatch" class="togglevis action" data-target_id="classmatch" data-target_display="block">show</div>
-	<div id="classmatch" style="display:none">
+	<h2>Matches (only email and membership class are checked)</h2>
+	<div id="show_match" class="togglevis action" data-target_id="match" data-target_display="block">show</div>
+	<div id="match" style="display:none">
 	<table>
 		<tr><th>Email</th><th>SDC Person</th><th>Membership Class</th><th>Brevo Person</th><th>Brevo Membership Class</th></tr>
     		{% for email, value in brevo_match.items  %}
